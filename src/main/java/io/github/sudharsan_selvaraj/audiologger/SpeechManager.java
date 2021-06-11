@@ -2,9 +2,11 @@ package io.github.sudharsan_selvaraj.audiologger;
 
 
 import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
+import com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory;
 
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 
 public class SpeechManager {
 
@@ -15,7 +17,7 @@ public class SpeechManager {
     }
 
     private void initializeVoice(SpeechOptions options) {
-        speaker = VoiceManager.getInstance().getVoice(options.getVoice().toString().toLowerCase(Locale.ROOT));
+        speaker = getSpeaker(options.getVoice()).get();
         speaker.setPitch(options.getPitch());
         speaker.setRate(options.getRate());
         speaker.setVolume(options.getVolume());
@@ -26,5 +28,9 @@ public class SpeechManager {
         if(message !=null) {
             speaker.speak(message);
         }
+    }
+
+    private Optional<Voice> getSpeaker(io.github.sudharsan_selvaraj.audiologger.Voice voice) {
+        return Arrays.stream(new KevinVoiceDirectory().getVoices()).filter(v -> v.getName().equals(voice.name().toLowerCase(Locale.ROOT))).findFirst();
     }
 }

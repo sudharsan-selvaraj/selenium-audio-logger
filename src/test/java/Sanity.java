@@ -14,13 +14,11 @@ public class Sanity {
     public static void main(String[] args) {
         WebDriverManager.chromedriver().setup();
 
-        SpyDriver spyDriver = new SpyDriver(new ChromeDriver());
-        SeleniumWaitPlugin waitPlugin = new SeleniumWaitPlugin(spyDriver, SeleniumWaitOptions.builder().defaultWaitTime(Duration.ofSeconds(10)).build());
+        SpyDriver<ChromeDriver> spyDriver = new SpyDriver<>(new ChromeDriver());
+        SeleniumWaitPlugin<ChromeDriver> waitPlugin = new SeleniumWaitPlugin<>(spyDriver, SeleniumWaitOptions.builder().defaultWaitTime(Duration.ofSeconds(10)).build());
 
         LogOptions options = new LogOptions();
-        options.setLogAfterCommand(true);
-        options.setLogBeforeCommand(true);
-        SeleniumAudioLogger logger = new SeleniumAudioLogger(spyDriver, options);
+        SeleniumAudioLogger<ChromeDriver> logger = new SeleniumAudioLogger<>(spyDriver, options);
 
         WebDriver driver = spyDriver.getSpyDriver();
 
