@@ -18,6 +18,7 @@ public class Sanity {
         SeleniumWaitPlugin<ChromeDriver> waitPlugin = new SeleniumWaitPlugin<>(spyDriver, SeleniumWaitOptions.builder().defaultWaitTime(Duration.ofSeconds(10)).build());
 
         LogOptions options = new LogOptions();
+        options.setLogAfterCommand(true);
         SeleniumAudioLogger<ChromeDriver> logger = new SeleniumAudioLogger<>(spyDriver, options);
 
         WebDriver driver = spyDriver.getSpyDriver();
